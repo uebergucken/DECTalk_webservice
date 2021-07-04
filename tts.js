@@ -1,4 +1,4 @@
-onst uuid = require('uuid');
+const uuid = require('uuid');
 const { exec } = require('child_process');
 const fs = require('fs');
 const express = require('express');
