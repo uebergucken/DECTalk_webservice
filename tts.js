@@ -11,7 +11,7 @@ app.get('/say', (req, res) => {
   var tmp = "/tmp/";
 
   //set dangerous characters, decode the get string, remove dangerous characters
-  var dangerChar = /("|&|\/|\\|\*|\+|_|<|>|`|~|\(|\))/g;
+  var dangerChar = /("|&|\/|\\|\*|\+|_|`|~|\(|\))/g;
   var data = decodeURIComponent(req.query.text);
   data = data.replace(dangerChar, '');
 
