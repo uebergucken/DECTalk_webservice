@@ -17,27 +17,19 @@ app.get('/say', (req, res) => {
 
   //generate filename, write data to file
   var filename = uuid.v4();
-  fs.writeFile(tmp+''+filename+'.tts', data, function (err) { if (err) return console.log(err); } );
+  fs.writeFile(`${tmp}${filename}.tts`, data, function (err) { if (err) return console.log(err); } );
 
   //generate wav file using tts engine
-  var cmd = 'cd '+ttsPath+' \&\& wine say.exe -pre [:phoneme on] -w '+tmp+''+filename+'.wav < '+tmp+''+filename+'.tts';
-  exec(cmd, (error, stdout, stderr) => {
-    if (error) {
-        console.log(`error: ${error.message}`);
-        return;
-    }
-    if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
-    }
-    console.log(`stdout: ${stdout}`);
+  var cmd = `cd ${ttsPath} && wine say.exe -pre "[:phoneme on]" -w ${tmp}${filename}.wav < ${tmp}${filename}.tts`;
+  var child = exec(cmd);
+  child.stdout.pipe(process.stdout);
+  child.on('exit', function () {
+    //return the wav file
+    var fileWithPath = `${tmp}${filename}.wav`;
+    res.download(fileWithPath, 'say.wav');
   });
-
-  //return the wav file
-  var fileWithPath = tmp+filename+".wav";
-  res.download(fileWithPath);
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Listening at http://localhost:${port}`)
 })
