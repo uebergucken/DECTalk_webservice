@@ -33,7 +33,7 @@ app.get('/say', (req, res) => {
     var fileWithPath = `${tmp}${filename}.wav`;
     res.download(fileWithPath, 'say.wav');
   });
-})
+});
 
 app.use((req, res, next) => {
    res.sendStatus(404);
