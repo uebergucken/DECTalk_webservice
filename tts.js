@@ -3,7 +3,12 @@ const { exec } = require('child_process');
 const fs = require('fs');
 const express = require('express');
 const app = express();
-const port = 8888;
+
+var https = require('https');
+var privateKey  = fs.readFileSync('service/cert/server.key', 'utf8');
+var certificate = fs.readFileSync('service/cert/server.crt', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+
 
 app.get('/say', (req, res) => {
   //set path info
@@ -30,6 +35,5 @@ app.get('/say', (req, res) => {
   });
 })
 
-app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`)
-})
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(8443);
