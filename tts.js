@@ -35,5 +35,9 @@ app.get('/say', (req, res) => {
   });
 })
 
+app.use((req, res, next) => {
+   res.sendStatus(404);
+});
+
 var httpsServer = https.createServer(credentials, app);
 httpsServer.listen(8443);
