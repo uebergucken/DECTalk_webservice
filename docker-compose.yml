@@ -1,0 +1,9 @@
+version: '3'
+services:
+  dec:
+    container_name: decwebservice
+    restart: unless-stopped
+    build:
+      context: .
+    ports:
+      - 8443:8443
