@@ -16,7 +16,7 @@ app.get('/say', (req, res) => {
   var tmp = "/tmp/";
 
   //set dangerous characters, decode the get string, remove dangerous characters
-  var dangerChar = /("|&|\/|\\|\*|\+|_|`|~|\(|\))/g;
+  var dangerChar = /("|&|\/|\\|\*|\+|`|~|\(|\))/g;
   var data;
   if (req.query.b64 == "1") {
       var buff = Buffer.from(req.query.text, 'base64');
