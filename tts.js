@@ -1,6 +1,5 @@
 const uuid = require('uuid');
 const { exec } = require('child_process');
-const base64 = require('btoa-atob');
 const fs = require('fs');
 const express = require('express');
 const app = express();
@@ -19,10 +18,13 @@ app.get('/say', (req, res) => {
   //set dangerous characters, decode the get string, remove dangerous characters
   var dangerChar = /("|&|\/|\\|\*|\+|_|`|~|\(|\))/g;
   var data;
-  if (req.query.b64) {
-      data = base64.atob(req.query.text);
+  if (req.query.b64 == "1") {
+      var buff = Buffer.from(req.query.text, 'base64');
+      data = buff.toString('utf-8');
+      data = decodeURIComponent(data);
+  } else {
+      data = decodeURIComponent(req.query.text);
   }
-  data = decodeURIComponent(req.query.text);
   data = data.replace(dangerChar, '');
 
   //generate filename, write data to file
