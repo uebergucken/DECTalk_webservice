@@ -1,5 +1,6 @@
 const uuid = require('uuid');
 const { exec } = require('child_process');
+const base64 = require('btoa-atob');
 const fs = require('fs');
 const express = require('express');
 const app = express();
@@ -19,7 +20,7 @@ app.get('/say', (req, res) => {
   var dangerChar = /("|&|\/|\\|\*|\+|_|`|~|\(|\))/g;
   var data;
   if (req.query.b64) {
-      data = atob(req.query.text);
+      data = base64.atob(req.query.text);
   }
   data = decodeURIComponent(req.query.text);
   data = data.replace(dangerChar, '');
