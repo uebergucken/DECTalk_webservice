@@ -6,13 +6,20 @@ This is a nodejs-based webservice for DECTalk. It assumes you have a server to h
 It is recommended to install this in a container using the included docker-compose files.
 
 Usage:
-[your_URL_here]/say?text=[DECTalk text here, including phoneme data etc.] - returns say.wav with the spoken audio.
 
-[your_URL_here]/say?b64&text=[Base64 encoded DECTalk text here w/phoneme data] - returns say.wav with the spoken audio - expects the DECTalk data to be base64 encoded first.
+```[your_URL_here]/say?text=[DECTalk text here, including phoneme data etc.]```
+
+Returns say.wav with the spoken audio.
+
+
+```[your_URL_here]/say?b64&text=[Base64 encoded DECTalk text here w/phoneme data]```
+
+Returns say.wav with the spoken audio - expects the DECTalk text to be base64 encoded first.
+
 
 # Twitch integration w/Streamelements and OBS
-While there are many use cases for the service, my goal was to use this with twitch by issuing !tts commands in the streamer's chatroom and having DECTalk respond. Provided your overlay is already set up (which is well documented) You can create a custom widget in Streamelements containing the following JS code:
-
+While there are many use cases for the service, my initial goal was to use this with twitch by issuing !tts commands in the streamer's chatroom and having DECTalk respond. Provided your overlay is already set up (which is well documented) You can create a custom widget in Streamelements containing the following JS code:
+```
 window.addEventListener("onEventReceived", function ( obj ) {
     const data = obj.detail.event && obj.detail.event.data;
     console.log("data=", data);
@@ -38,3 +45,4 @@ function speak( text ) {
         audioTag.remove();
     });
 }
+```
