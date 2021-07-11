@@ -10,7 +10,7 @@ RUN apk add --no-cache \
     wine
 COPY server.key server.crt tts.js /tmp/ && git clone https://github.com/uebergucken/DECTalk4_win32_bin.git
 RUN mkdir -p /service/cert && mv /tmp/tts.js /service && mv server.key server.crt /service/cert && \
-    cd /service && npm install express uuid btoa-atob && mv /tmp/DECTalk4_win32_bin /service;
+    cd /service && npm install express uuid && mv /tmp/DECTalk4_win32_bin /service;
 RUN Xvfb :0 -screen 0 1024x768x16 &
 RUN export NODE_ENV=production && export DISPLAY=:0.0 && wineboot
 RUN printf '#!/bin/sh\nfind /tmp -mtime +1 -exec rm *.wav *.tts {} \;' > /etc/periodic/daily/tmp_cleanup.sh && chmod +x /etc/periodic/daily/tmp_cleanup.sh
